@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Series: Building an AI Network Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <style>
+        /* Custom styles to make the code blocks look like a terminal */
+        pre {
+            background-color: #1e1e1e !important;
+            color: #d4d4d4 !important;
+            border-radius: 0.5rem;
+        }
+        .prose h2 {
+            color: #1e3a8a; /* Tailwind blue-900 */
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+        }
+        .prose h3 {
+            color: #2563eb; /* Tailwind blue-600 */
+        }
+        .date-badge {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0284c7;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-10">
+        <div class="max-w-4xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+                The Applied AI Revolution
+            </h1>
+            <p class="mt-2 text-sm text-gray-500">Building an LLM Network Engineer & Beyond</p>
+        </div>
+    </header>
+
+    <!-- Main Blog Content -->
+    <main class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <article class="prose prose-lg prose-blue max-w-none bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100">
+            
+            <!-- Part 1 -->
+            <section id="part-1">
+                <span class="date-badge">Post 1</span>
+                <h2 class="mt-0">Part 1: Pure vs. Applied AI, and the Power of the First "Ping"</h2>
+                
+                <p>When we talk about science, there is an invisible line drawn between the "Pure" and the "Applied."</p>
+
+                <p>In mathematics, pure math explores abstract concepts for their own sake—the elegant, profound truths of numbers and shapes. Applied math uses those truths to calculate the stress on a bridge or encrypt your bank transactions. In physics, theoretical physicists chase the fundamental laws of the universe on chalkboards, while applied physicists build the machines that make those laws tangible.</p>
+
+                <p>Historically, there's been a temptation to view pure science as the "higher" calling, the realm of the genius, while viewing applied science as mere engineering. But this is a deeply flawed perspective.</p>
+
+                <p>Look at the LASER. The theoretical foundation of the laser—stimulated emission of radiation—was pure physics, rooted in Einstein’s work in 1917. It was an astonishing revelation about how light and atoms interact. But what did that pure theory <em>do</em>? Nothing, until it was applied.</p>
+
+                <p>The <em>application</em> of the laser is what enabled the world as we know it. Fiber optic cables that carry the internet across oceans, the precision manufacturing of the silicon chips in your phone, barcode scanners, laser eye surgery, and yes, even the humble CD player—a marvel of applied science that revolutionized digital media. Pure science gave us the raw element; applied science built the modern world with it.</p>
+
+                <h3>Defining Applied AI</h3>
+
+                <p>Today, we are living through the exact same dichotomy in Artificial Intelligence.</p>
+
+                <p>The theoretical design of AI—the legendary "Attention Is All You Need" paper, the conception of Mixture of Experts (MoE), the deep mathematical mechanisms to handle KV caching and minimize context resources—this is <strong>Pure AI</strong>. It is vital, brilliant, and foundational.</p>
+
+                <p>But let's be honest: most of us are not doing Pure AI. We aren't inventing new foundational architectures from scratch.</p>
+
+                <p>We take existing models and we retrain or fine-tune them using tools like InstructLab or Unsloth. We "liberate" models using Heretic. We expand them, tweak their duplicate layers, prompt them, and integrate them into our systems.</p>
+
+                <p>To me, <strong>these actions are Applied AI.</strong> And just like applied physics, you do not have to think of Applied AI as inferior. Applied AI is the act of taking an abstract reasoning engine and forcing it to <em>do work</em>.</p>
+
+                <h3>Doing an Applied AI Thing: The First Ping</h3>
+
+                <p>In this blog series, I am going to do an Applied AI thing. I am going to build an AI network engineer.</p>
+
+                <p>An LLM, out of the box, is a brain in a jar. It knows what a network is, but it can't touch one. To fix this, I am building an application (FastAPI on the backend, React/Vite/Tailwind on the frontend) hooked up to a local LLM (running a heavily optimized Qwen 27B model via <code>llama-server</code>).</p>
+
+                <p>But the magic isn't the stack. The magic is the tools.</p>
+
+                <p>For version one, I am giving the LLM a single, humble tool: <code>ping</code>.</p>
+
+                <p>By adding tool-calling capabilities, we allow the LLM to reach out of its jar. When you ask, "Is the gateway up?", the LLM doesn't just guess based on its training data. It halts its generation, constructs a JSON payload, triggers a python function on the backend to execute a ping, reads the ICMP echo reply, and then formulates an answer based on <em>live reality</em>.</p>
+
+                <p>The potential this single act adds to the model is staggering. With <code>ping</code>, the LLM gains the concept of "reachability." It stops being a storyteller and becomes an observer. In the next post, we’ll move from observing to mapping.</p>
+            </section>
+
+            <!-- Part 2 -->
+            <section id="part-2">
+                <span class="date-badge mt-12">Post 2</span>
+                <h2 class="mt-0">Part 2: Seeing the Network: Expanding the AI Toolkit with Nmap and Netcat</h2>
+                
+                <h3>From Ping to Pulse (Part 1 continued)</h3>
+
+                <p>When I sat down to build V1, I planned to give the LLM just <code>ping</code>. One tool. Pure.</p>
+
+                <p>But there's a problem with pure ping. Ping tells you a host is alive. It does <em>not</em> tell you what services are running there. An ICMP echo reply proves reachability, but a dead web server on a live host still gets you a 0% packet loss.</p>
+
+                <p>So I cheated. I gave the LLM a second tool in V1: <code>check_http</code> — a HTTP GET call, the Python equivalent of <code>curl</code>.</p>
+
+                <p>The reason is simple: these two tools together form a complete "liveness check."</p>
+
+                <ul>
+                    <li>Ping answers: "Is the host breathing?"</li>
+                    <li>HTTP answers: "Is the web server serving?"</li>
+                </ul>
+
+                <p>Applied AI isn't about being pure. It's about being useful.</p>
+
+                <h3>The Tool-Calling Loop</h3>
+
+                <p>The real magic isn't the tools themselves — both <code>ping</code> and <code>check_http</code> are trivial Python functions. The magic is the <strong>loop</strong> that connects them to the LLM.</p>
+
+                <p>Here's the architecture:</p>
+
+<pre><code>User: "Check if 172.17.212.253 is up"
+         │
+         ▼
+   FastAPI receives POST /api/chat
+         │
+         ▼
+   Sends conversation + tool schemas to LLM
+         │
+         ▼
+   LLM decides: "I should call network_ping"
+   → responds with JSON tool_call
+         │
+         ▼
+   Backend executes tools.ping.network_ping("172.17.212.253")
+   → subprocess.run(["ping", "-c", "4", ip])
+   → parses ICMP output into structured JSON
+         │
+         ▼
+   JSON result sent back to LLM as role: "tool"
+         │
+         ▼
+   LLM synthesizes: "172.17.212.253 is alive.
+   Average latency 0.7ms. 0% packet loss."</code></pre>
+
+                <p>This loop — LLM decides, backend executes, LLM synthesizes — is the fundamental pattern of Applied AI. It's the same pattern whether you're giving the model <code>ping</code> or a Kubernetes API.</p>
+
+                <h3>The Code in Three Files</h3>
+
+                <p>The whole V1 tool system lives in three files you can read in under two minutes.</p>
+
+                <p><strong><code>backend/tools/ping.py</code></strong> (~30 lines):<br>
+                Takes a target IP, runs <code>subprocess.run(["ping", "-c", "4", "-W", "2", target])</code>, uses regex to extract packet loss, min/avg/max latency, and TTL. Returns it all as a JSON string. That's it. The tool is the simplest possible wrapper around a system command.</p>
+
+                <p><strong><code>backend/tools/__init__.py</code></strong> (~70 lines):<br>
+                This is the tool registry — the only file you touch when adding new tools. It holds two things:</p>
+
+                <ol>
+                    <li><code>TOOL_FUNCTIONS</code> — a dict mapping human-readable names to Python functions</li>
+                    <li><code>TOOL_SCHEMAS</code> — a list of OpenAI-style JSON schemas that tell the LLM what each tool does and what arguments it expects</li>
+                </ol>
+
+                <p>To add a new tool, you write a function, import it here, and add one dict entry to each list. The LLM discovers the tool automatically on the next request.</p>
+
+                <p><strong><code>backend/llm_client.py</code></strong> (~60 lines of core logic):<br>
+                The loop itself. It sends the conversation history plus tool schemas to the LLM. If the LLM responds with a <code>tool_call</code>, the backend executes the Python function, appends the result as a <code>role: "tool"</code>, and sends the whole thing back to the LLM again. This repeats until the LLM decides to respond in natural language. Maximum 10 iterations — you don't want an infinite tool loop.</p>
+
+                <p>The entire application, in fact, is under 400 lines of Python. That's the point. You don't need a big framework to give an LLM tools. You need a loop and a registry.</p>
+
+                <h3>What curl Adds</h3>
+
+                <p>The <code>check_http</code> tool is barely more complex — it's an <code>httpx.get()</code> call wrapped in error handling. But combined with ping, it unlocks the LLM to answer questions like:</p>
+
+                <ul>
+                    <li>"Is the web server on 172.17.212.253:8080 responding?"</li>
+                    <li>"What status code does the health endpoint return?"</li>
+                    <li>"Is the service returning JSON or HTML?"</li>
+                </ul>
+
+                <p>Without this tool, the LLM can only say "the host is up." With it, the LLM can diagnose: <em>host is up, web server is down, HTTP returns 503.</em></p>
+
+                <p>That's the power of composition. Two simple tools, combined, give the LLM more capability than the sum of their parts.</p>
+
+                <p><em>[Insert GitHub link to the repository here]</em></p>
+            </section>
+
+            <!-- Part 3 -->
+            <section id="part-3">
+                <span class="date-badge mt-12">Post 3</span>
+                <h2 class="mt-0">Part 3: The Limitless Potential of Tool-Calling</h2>
+
+                <p>We started this series talking about Pure vs. Applied AI. We proved that by giving an LLM access to simple tools like <code>ping</code> and <code>curl</code>, we transformed it from a passive text generator into an active network diagnostician.</p>
+
+                <p>But stepping back from the network engineer use-case, the implications of this architecture are staggering. The immense power of giving an LLM access to tools is that it bridges the gap between <em>knowing</em> and <em>doing</em>.</p>
+
+                <p>When an LLM can formulate a plan and execute functions to achieve it, the AI stops being a static dictionary and becomes an active agent. And because the backend is really just a Python loop mapping text to functions, the only real limit is your creativity.</p>
+
+                <h3>Thinking Out of the Box: What Else Could We Build?</h3>
+
+                <p>If we can map network commands, what other tools could we put in the registry?</p>
+
+                <ul>
+                    <li><strong>The Smart Home Maestro:</strong> Imagine giving an LLM tools like <code>get_room_temperature(room)</code>, <code>set_thermostat(temp)</code>, and <code>read_calendar(user)</code>. You don't just ask "what's the weather?" You say, "I'm coming home early from the gym, make it comfortable." The LLM checks your calendar, sees the gym block, realizes you'll be running hot, and autonomously uses its tools to drop the AC to 68°F before you walk through the door.</li>
+                    <li><strong>The Embodied Robotics Agent:</strong> Imagine hooking up tools like <code>capture_camera_frame()</code>, <code>read_lidar()</code>, and <code>actuate_motor(speed, direction)</code>. The LLM steps out of the digital realm and into the physical. You don't just ask for information; you tell a small rover, "Navigate the warehouse and find the misplaced pallet of paper." The model continuously grabs camera feeds, interprets the physical layout, avoids obstacles, and physically moves through the world until it sees what you asked for.</li>
+                    <li><strong>The Predictive Maintenance Agent:</strong> Give a model tools like <code>read_imu_data(sensor_id)</code>, <code>get_thermal_camera_feed()</code>, and <code>trigger_safety_shutdown()</code>. The AI can literally "feel" the physical world. If a factory motor starts vibrating abnormally, the LLM polls the IMU for high-frequency anomalies, checks the thermal feed for overheating, and diagnoses a failing bearing—shutting down the machine before a catastrophic mechanical failure ever happens.</li>
+                    <li><strong>The Bioinformatics Assistant:</strong> Imagine tools that query the AlphaFold API or run local genomic sequencing scripts. A researcher could ask, "What happens if we mutate this specific protein?" and the LLM would independently orchestrate the necessary API calls to model the outcome and return the visualized results.</li>
+                </ul>
+
+                <h3>The Ultimate Lever</h3>
+
+                <p>Archimedes famously said, "Give me a lever long enough and a fulcrum on which to place it, and I shall move the world."</p>
+
+                <p>In the realm of Applied AI, the LLM is the fulcrum—an incredibly powerful, centralized reasoning core. The tools we write are the levers. Whether it's <code>ping</code> checking a router, a Python script restarting a server, or a financial API moving money, the underlying architecture is exactly the same.</p>
+
+                <p>We no longer need to wait for researchers in the "Pure AI" space to build smarter models before we can do more interesting things. The models we have right now are more than capable. It is entirely up to us to build the tools, hand them over, and see what they can build next.</p>
+            </section>
+
+            <!-- Part 4 -->
+            <section id="part-4">
+                <span class="date-badge mt-12">Post 4</span>
+                <h2 class="mt-0">Part 4: The True Power of Applied AI</h2>
+
+                <p>We've journeyed from the philosophy of pure science to the practical reality of a pinging, port-scanning LLM, and brainstormed where else this could go. But looking at the big picture, what makes Applied AI so uniquely powerful?</p>
+
+                <p>It’s not just about automating repetitive chores. The true, world-shifting power of Applied AI lies in <strong>the democratization of agency</strong>.</p>
+
+                <p>For decades, software development required translating human intent into rigid, inflexible syntax. If you wanted a system to monitor your network, trade stocks, or manage your home, you had two choices: learn the specific programming languages and APIs of those domains, or pay a company that already had. Software was a bottlenecked translation layer between what you <em>wanted</em> to do and what a machine <em>could</em> do.</p>
+
+                <p>Applied AI, specifically through tool-calling, flips this paradigm entirely. By giving reasoning engines access to custom tools, <strong>human language becomes the universal API.</strong></p>
+
+                <p>The profound implication here is that domain experts—network engineers, biologists, accountants, teachers—no longer need to wait for a Silicon Valley startup to build their perfect SaaS product. You can take an open-weights model, wrap it in a lightweight Python loop, hand it the shell scripts or APIs you <em>already use every single day</em>, and instantly breathe life into a custom, autonomous agent.</p>
+
+                <p>It is the ultimate force multiplier. Pure AI research gave us the reasoning engine—it built the digital brain. But Applied AI lets anyone build the digital hands. And as we've seen with our simple network engineer bot, once you give it hands, there is absolutely no limit to what it can reach.</p>
+            </section>
+        </article>
+    </main>
+
+</body>
+</html>
