@@ -1,3 +1,3 @@
-#The Applied AI Revolution
-###Building an LLM Network Engineer & Beyond
+# The Applied AI Revolution
+### Building an LLM Network Engineer & Beyond
 
