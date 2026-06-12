@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -- Custom scrollbar for dark theme -- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0e1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2640;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3555;
+}
+
+/* -- Smooth animations -- */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.flex.justify-start > div,
+.flex.justify-end > div {
+  animation: slideIn 0.2s ease-out;
+}
+
+/* -- Prevent text selection on header -- */
+header {
+  user-select: none;
+}
